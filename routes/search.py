@@ -42,6 +42,13 @@ def index():
             response_dict_data = json.loads(str(response.text))
             return render_template('index.html', res=response_dict_data)
 
+@search_blueprint.route("/",methods=['GET'],endpoint='read')
+def index():
+    if request.method=='GET':
+        res ={
+	            'hits': {'total': 0, 'hits': []}
+             }
+        return render_template("index.html",res=res)
 
 @search_blueprint.route("/autocomplete",methods=['POST'],endpoint='autocomplete')
 def autocomplete():
@@ -62,4 +69,3 @@ def autocomplete():
         response = requests.request("GET", url, data=payload, headers=headers)
         response_dict_data = json.loads(str(response.text))
         return json.dumps(response_dict_data)
-        
